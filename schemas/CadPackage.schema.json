@@ -1,0 +1,1309 @@
+{
+  "$defs": {
+    "AnchorCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "element_id": {
+          "title": "Element Id",
+          "type": "string"
+        },
+        "position_relation": {
+          "enum": [
+            "INSIDE",
+            "OUTSIDE",
+            "BOUNDARY",
+            "UNCERTAIN"
+          ],
+          "title": "Position Relation",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "element_id",
+        "position_relation",
+        "reason"
+      ],
+      "title": "AnchorCheck",
+      "type": "object"
+    },
+    "AreaPolygon": {
+      "additionalProperties": false,
+      "properties": {
+        "boundary_mm": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 20000,
+          "minItems": 3,
+          "title": "Boundary Mm",
+          "type": "array"
+        },
+        "holes_mm": {
+          "items": {
+            "items": {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "maxItems": 1000,
+          "title": "Holes Mm",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "area_mm2": {
+          "exclusiveMinimum": 0,
+          "title": "Area Mm2",
+          "type": "number"
+        },
+        "area_m2": {
+          "exclusiveMinimum": 0,
+          "title": "Area M2",
+          "type": "number"
+        }
+      },
+      "required": [
+        "boundary_mm",
+        "id",
+        "area_mm2",
+        "area_m2"
+      ],
+      "title": "AreaPolygon",
+      "type": "object"
+    },
+    "Barrier": {
+      "additionalProperties": false,
+      "properties": {
+        "element_id": {
+          "title": "Element Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "WALL",
+            "DOOR",
+            "WINDOW",
+            "COLUMN",
+            "BEAM",
+            "STAIR",
+            "SPACE",
+            "EXCLUSION",
+            "HOLE",
+            "ANNOTATION",
+            "UNKNOWN"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "source_handles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Handles",
+          "type": "array"
+        },
+        "paths_mm": {
+          "items": {
+            "items": {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "title": "Paths Mm",
+          "type": "array"
+        },
+        "footprint_known": {
+          "title": "Footprint Known",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "element_id",
+        "role",
+        "source_handles",
+        "paths_mm",
+        "footprint_known"
+      ],
+      "title": "Barrier",
+      "type": "object"
+    },
+    "Dimensions": {
+      "additionalProperties": false,
+      "properties": {
+        "height_mm": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Height Mm"
+        },
+        "thickness_mm": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Thickness Mm"
+        },
+        "sill_height_mm": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sill Height Mm"
+        },
+        "line_reference": {
+          "default": "UNKNOWN",
+          "enum": [
+            "UNKNOWN",
+            "CENTERLINE",
+            "LEFT_FACE",
+            "RIGHT_FACE"
+          ],
+          "title": "Line Reference",
+          "type": "string"
+        }
+      },
+      "title": "Dimensions",
+      "type": "object"
+    },
+    "Element": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "WALL",
+            "DOOR",
+            "WINDOW",
+            "COLUMN",
+            "BEAM",
+            "STAIR",
+            "SPACE",
+            "EXCLUSION",
+            "HOLE",
+            "ANNOTATION",
+            "UNKNOWN"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "source_handles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Handles",
+          "type": "array"
+        },
+        "source_path": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Path",
+          "type": "array"
+        },
+        "source_type": {
+          "title": "Source Type",
+          "type": "string"
+        },
+        "layer": {
+          "title": "Layer",
+          "type": "string"
+        },
+        "block_names": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Block Names",
+          "type": "array"
+        },
+        "geometry": {
+          "$ref": "#/$defs/Geometry"
+        },
+        "confidence": {
+          "enum": [
+            "EXPLICIT",
+            "CANDIDATE",
+            "UNKNOWN"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "dimensions": {
+          "$ref": "#/$defs/Dimensions"
+        },
+        "dimension_sources": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Dimension Sources",
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "source_handles",
+        "source_path",
+        "source_type",
+        "layer",
+        "geometry",
+        "confidence"
+      ],
+      "title": "Element",
+      "type": "object"
+    },
+    "EnrichmentResult": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "REVIEW_REQUIRED",
+            "UNRESOLVED",
+            "REJECTED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "MODEL_API",
+            "IMPORTED_PROPOSAL"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "proposal": {
+          "$ref": "#/$defs/SemanticProposal"
+        },
+        "reference_validation": {
+          "enum": [
+            "PASS",
+            "FAIL"
+          ],
+          "title": "Reference Validation",
+          "type": "string"
+        },
+        "issues": {
+          "items": {
+            "$ref": "#/$defs/Issue"
+          },
+          "title": "Issues",
+          "type": "array"
+        },
+        "indoor_candidates": {
+          "items": {
+            "$ref": "#/$defs/AreaPolygon"
+          },
+          "title": "Indoor Candidates",
+          "type": "array"
+        },
+        "usable_area_preview": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UsableArea"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "provenance": {
+          "additionalProperties": true,
+          "title": "Provenance",
+          "type": "object"
+        },
+        "source_geometry_changed": {
+          "const": false,
+          "default": false,
+          "title": "Source Geometry Changed",
+          "type": "boolean"
+        },
+        "semantic_confirmation": {
+          "const": "PENDING",
+          "default": "PENDING",
+          "title": "Semantic Confirmation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "origin",
+        "proposal",
+        "reference_validation",
+        "issues"
+      ],
+      "title": "EnrichmentResult",
+      "type": "object"
+    },
+    "GapProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "from_vertex_id": {
+          "title": "From Vertex Id",
+          "type": "string"
+        },
+        "to_vertex_id": {
+          "title": "To Vertex Id",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from_vertex_id",
+        "to_vertex_id",
+        "reason"
+      ],
+      "title": "GapProposal",
+      "type": "object"
+    },
+    "Geometry": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "LINE",
+            "POLYLINE",
+            "ARC",
+            "CIRCLE",
+            "ELLIPSE",
+            "SPLINE",
+            "POLYGON",
+            "MULTIPOLYGON",
+            "POINT",
+            "TEXT",
+            "UNSUPPORTED"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "points_mm": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "title": "Points Mm",
+          "type": "array"
+        },
+        "closed": {
+          "default": false,
+          "title": "Closed",
+          "type": "boolean"
+        },
+        "polygons": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Polygons",
+          "type": "array"
+        },
+        "parameters": {
+          "additionalProperties": true,
+          "title": "Parameters",
+          "type": "object"
+        },
+        "approximation_tolerance_mm": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Approximation Tolerance Mm"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Geometry",
+      "type": "object"
+    },
+    "IndoorProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-zA-Z0-9_-]{1,80}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "boundary_vertex_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "minItems": 3,
+          "title": "Boundary Vertex Ids",
+          "type": "array"
+        },
+        "hole_vertex_ids": {
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "maxItems": 100,
+          "title": "Hole Vertex Ids",
+          "type": "array"
+        },
+        "gap_proposals": {
+          "items": {
+            "$ref": "#/$defs/GapProposal"
+          },
+          "maxItems": 100,
+          "title": "Gap Proposals",
+          "type": "array"
+        },
+        "evidence_element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 200,
+          "minItems": 1,
+          "title": "Evidence Element Ids",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "boundary_vertex_ids",
+        "hole_vertex_ids",
+        "gap_proposals",
+        "evidence_element_ids",
+        "reason"
+      ],
+      "title": "IndoorProposal",
+      "type": "object"
+    },
+    "Issue": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "default": "WARNING",
+          "enum": [
+            "INFO",
+            "WARNING",
+            "ERROR"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Element Ids",
+          "type": "array"
+        },
+        "source_handles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Handles",
+          "type": "array"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "Issue",
+      "type": "object"
+    },
+    "Obstacle": {
+      "additionalProperties": false,
+      "properties": {
+        "element_id": {
+          "title": "Element Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "WALL",
+            "DOOR",
+            "WINDOW",
+            "COLUMN",
+            "BEAM",
+            "STAIR",
+            "SPACE",
+            "EXCLUSION",
+            "HOLE",
+            "ANNOTATION",
+            "UNKNOWN"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "source_handles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Handles",
+          "type": "array"
+        },
+        "basis": {
+          "title": "Basis",
+          "type": "string"
+        },
+        "polygons": {
+          "items": {
+            "$ref": "#/$defs/AreaPolygon"
+          },
+          "title": "Polygons",
+          "type": "array"
+        }
+      },
+      "required": [
+        "element_id",
+        "role",
+        "source_handles",
+        "basis",
+        "polygons"
+      ],
+      "title": "Obstacle",
+      "type": "object"
+    },
+    "RelationProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "from_element_id": {
+          "title": "From Element Id",
+          "type": "string"
+        },
+        "to_element_id": {
+          "title": "To Element Id",
+          "type": "string"
+        },
+        "relation": {
+          "enum": [
+            "HOSTED_BY",
+            "CONNECTS_TO",
+            "LABELS"
+          ],
+          "title": "Relation",
+          "type": "string"
+        },
+        "evidence_element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Evidence Element Ids",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from_element_id",
+        "to_element_id",
+        "relation",
+        "evidence_element_ids",
+        "reason"
+      ],
+      "title": "RelationProposal",
+      "type": "object"
+    },
+    "RoleProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "element_id": {
+          "title": "Element Id",
+          "type": "string"
+        },
+        "proposed_role": {
+          "enum": [
+            "WALL",
+            "DOOR",
+            "WINDOW",
+            "COLUMN",
+            "BEAM",
+            "STAIR",
+            "SPACE",
+            "EXCLUSION",
+            "HOLE",
+            "ANNOTATION",
+            "UNKNOWN"
+          ],
+          "title": "Proposed Role",
+          "type": "string"
+        },
+        "evidence_element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Evidence Element Ids",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "element_id",
+        "proposed_role",
+        "evidence_element_ids",
+        "reason"
+      ],
+      "title": "RoleProposal",
+      "type": "object"
+    },
+    "ScopeReview": {
+      "additionalProperties": false,
+      "properties": {
+        "extent": {
+          "enum": [
+            "WHOLE_STORE_CANDIDATE",
+            "PARTIAL_INTERIOR",
+            "UNRESOLVED"
+          ],
+          "title": "Extent",
+          "type": "string"
+        },
+        "reviewed_view_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Reviewed View Ids",
+          "type": "array"
+        },
+        "summary": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "anchor_checks": {
+          "items": {
+            "$ref": "#/$defs/AnchorCheck"
+          },
+          "maxItems": 200,
+          "title": "Anchor Checks",
+          "type": "array"
+        }
+      },
+      "required": [
+        "extent",
+        "reviewed_view_ids",
+        "summary",
+        "anchor_checks"
+      ],
+      "title": "ScopeReview",
+      "type": "object"
+    },
+    "SemanticProposal": {
+      "additionalProperties": false,
+      "description": "Model output: references only; coordinates and dimensions are not writable.",
+      "properties": {
+        "schema_version": {
+          "enum": [
+            "cad-semantic-proposal/1.0",
+            "cad-semantic-proposal/2.0"
+          ],
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        },
+        "evidence_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Evidence Sha256",
+          "type": "string"
+        },
+        "role_proposals": {
+          "items": {
+            "$ref": "#/$defs/RoleProposal"
+          },
+          "maxItems": 500,
+          "title": "Role Proposals",
+          "type": "array"
+        },
+        "indoor_proposals": {
+          "items": {
+            "$ref": "#/$defs/IndoorProposal"
+          },
+          "maxItems": 20,
+          "title": "Indoor Proposals",
+          "type": "array"
+        },
+        "relation_proposals": {
+          "items": {
+            "$ref": "#/$defs/RelationProposal"
+          },
+          "maxItems": 500,
+          "title": "Relation Proposals",
+          "type": "array"
+        },
+        "unresolved": {
+          "items": {
+            "$ref": "#/$defs/SemanticUnresolved"
+          },
+          "maxItems": 500,
+          "title": "Unresolved",
+          "type": "array"
+        },
+        "scope_review": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScopeReview"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "schema_version",
+        "source_sha256",
+        "evidence_sha256",
+        "role_proposals",
+        "indoor_proposals",
+        "relation_proposals",
+        "unresolved"
+      ],
+      "title": "SemanticProposal",
+      "type": "object"
+    },
+    "SemanticUnresolved": {
+      "additionalProperties": false,
+      "properties": {
+        "element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Element Ids",
+          "type": "array"
+        },
+        "question": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        }
+      },
+      "required": [
+        "element_ids",
+        "question"
+      ],
+      "title": "SemanticUnresolved",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "filename": {
+          "title": "Filename",
+          "type": "string"
+        },
+        "format": {
+          "enum": [
+            "DXF",
+            "DWG"
+          ],
+          "title": "Format",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "byte_count": {
+          "exclusiveMinimum": 0,
+          "title": "Byte Count",
+          "type": "integer"
+        },
+        "dxf_version": {
+          "title": "Dxf Version",
+          "type": "string"
+        },
+        "insunits": {
+          "title": "Insunits",
+          "type": "integer"
+        },
+        "scale_to_mm": {
+          "exclusiveMinimum": 0,
+          "title": "Scale To Mm",
+          "type": "number"
+        },
+        "conversion": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Conversion"
+        }
+      },
+      "required": [
+        "filename",
+        "format",
+        "sha256",
+        "byte_count",
+        "dxf_version",
+        "insunits",
+        "scale_to_mm"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "UsableArea": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "usable-area/1.0",
+          "default": "usable-area/1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "default": "NOT_READY",
+          "enum": [
+            "READY",
+            "REVIEW_REQUIRED",
+            "NOT_READY",
+            "EMPTY"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "ready_for_placement": {
+          "default": false,
+          "title": "Ready For Placement",
+          "type": "boolean"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "scope_source": {
+          "default": "NONE",
+          "enum": [
+            "NONE",
+            "SOURCE_BOUND_USER",
+            "EXPLICIT_CAD_SCOPE",
+            "EXPLICIT_CAD_ROOMS",
+            "MODEL_PROPOSAL"
+          ],
+          "title": "Scope Source",
+          "type": "string"
+        },
+        "scope_element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Scope Element Ids",
+          "type": "array"
+        },
+        "indoor_regions": {
+          "items": {
+            "$ref": "#/$defs/AreaPolygon"
+          },
+          "title": "Indoor Regions",
+          "type": "array"
+        },
+        "regions": {
+          "items": {
+            "$ref": "#/$defs/AreaPolygon"
+          },
+          "title": "Regions",
+          "type": "array"
+        },
+        "obstacles": {
+          "items": {
+            "$ref": "#/$defs/Obstacle"
+          },
+          "title": "Obstacles",
+          "type": "array"
+        },
+        "barriers": {
+          "items": {
+            "$ref": "#/$defs/Barrier"
+          },
+          "title": "Barriers",
+          "type": "array"
+        },
+        "excluded_regions": {
+          "items": {
+            "$ref": "#/$defs/AreaPolygon"
+          },
+          "title": "Excluded Regions",
+          "type": "array"
+        },
+        "indoor_area_m2": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Indoor Area M2"
+        },
+        "excluded_area_m2": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Excluded Area M2"
+        },
+        "usable_area_m2": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Usable Area M2"
+        },
+        "boundary_clearance_mm": {
+          "default": 0,
+          "title": "Boundary Clearance Mm",
+          "type": "number"
+        },
+        "obstacle_clearance_mm": {
+          "default": 0,
+          "title": "Obstacle Clearance Mm",
+          "type": "number"
+        },
+        "issues": {
+          "items": {
+            "$ref": "#/$defs/Issue"
+          },
+          "title": "Issues",
+          "type": "array"
+        },
+        "footprint_check_required": {
+          "default": true,
+          "title": "Footprint Check Required",
+          "type": "boolean"
+        },
+        "meaning": {
+          "default": "已声明室内范围扣除已知占地；REVIEW_REQUIRED 的区域仅供核实，不能直接批准摆放。",
+          "title": "Meaning",
+          "type": "string"
+        }
+      },
+      "title": "UsableArea",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "cad-understanding/1.0",
+      "default": "cad-understanding/1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "COMPLETE",
+        "PARTIAL"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/Source"
+    },
+    "units": {
+      "const": "mm",
+      "default": "mm",
+      "title": "Units",
+      "type": "string"
+    },
+    "coordinate_system": {
+      "additionalProperties": true,
+      "title": "Coordinate System",
+      "type": "object"
+    },
+    "walls": {
+      "items": {
+        "$ref": "#/$defs/Element"
+      },
+      "title": "Walls",
+      "type": "array"
+    },
+    "doors": {
+      "items": {
+        "$ref": "#/$defs/Element"
+      },
+      "title": "Doors",
+      "type": "array"
+    },
+    "windows": {
+      "items": {
+        "$ref": "#/$defs/Element"
+      },
+      "title": "Windows",
+      "type": "array"
+    },
+    "columns": {
+      "items": {
+        "$ref": "#/$defs/Element"
+      },
+      "title": "Columns",
+      "type": "array"
+    },
+    "beams": {
+      "items": {
+        "$ref": "#/$defs/Element"
+      },
+      "title": "Beams",
+      "type": "array"
+    },
+    "stairs": {
+      "items": {
+        "$ref": "#/$defs/Element"
+      },
+      "title": "Stairs",
+      "type": "array"
+    },
+    "spaces": {
+      "items": {
+        "$ref": "#/$defs/Element"
+      },
+      "title": "Spaces",
+      "type": "array"
+    },
+    "exclusions": {
+      "items": {
+        "$ref": "#/$defs/Element"
+      },
+      "title": "Exclusions",
+      "type": "array"
+    },
+    "holes": {
+      "items": {
+        "$ref": "#/$defs/Element"
+      },
+      "title": "Holes",
+      "type": "array"
+    },
+    "annotations": {
+      "items": {
+        "$ref": "#/$defs/Element"
+      },
+      "title": "Annotations",
+      "type": "array"
+    },
+    "unknown_objects": {
+      "items": {
+        "$ref": "#/$defs/Element"
+      },
+      "title": "Unknown Objects",
+      "type": "array"
+    },
+    "candidates": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Candidates",
+      "type": "array"
+    },
+    "topology": {
+      "additionalProperties": true,
+      "title": "Topology",
+      "type": "object"
+    },
+    "reconstruction": {
+      "additionalProperties": true,
+      "title": "Reconstruction",
+      "type": "object"
+    },
+    "usable_area": {
+      "$ref": "#/$defs/UsableArea"
+    },
+    "enrichment": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EnrichmentResult"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "inventory": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Inventory",
+      "type": "array"
+    },
+    "issues": {
+      "items": {
+        "$ref": "#/$defs/Issue"
+      },
+      "title": "Issues",
+      "type": "array"
+    },
+    "summary": {
+      "additionalProperties": true,
+      "title": "Summary",
+      "type": "object"
+    },
+    "provenance": {
+      "additionalProperties": true,
+      "title": "Provenance",
+      "type": "object"
+    }
+  },
+  "required": [
+    "status",
+    "source",
+    "coordinate_system",
+    "topology",
+    "reconstruction",
+    "inventory",
+    "issues",
+    "summary",
+    "provenance"
+  ],
+  "title": "CadPackage",
+  "type": "object"
+}

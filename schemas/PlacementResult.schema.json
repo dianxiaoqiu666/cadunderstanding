@@ -1,0 +1,51 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "decision": {
+      "enum": [
+        "VALID",
+        "INVALID",
+        "REVIEW_REQUIRED",
+        "NOT_READY"
+      ],
+      "title": "Decision",
+      "type": "string"
+    },
+    "allowed": {
+      "title": "Allowed",
+      "type": "boolean"
+    },
+    "geometric_fit": {
+      "title": "Geometric Fit",
+      "type": "boolean"
+    },
+    "reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Reasons",
+      "type": "array"
+    },
+    "colliding_element_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Colliding Element Ids",
+      "type": "array"
+    },
+    "source_sha256": {
+      "title": "Source Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "decision",
+    "allowed",
+    "geometric_fit",
+    "reasons",
+    "colliding_element_ids",
+    "source_sha256"
+  ],
+  "title": "PlacementResult",
+  "type": "object"
+}

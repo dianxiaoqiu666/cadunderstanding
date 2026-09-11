@@ -1,0 +1,230 @@
+{
+  "$defs": {
+    "Dimensions": {
+      "additionalProperties": false,
+      "properties": {
+        "height_mm": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Height Mm"
+        },
+        "thickness_mm": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Thickness Mm"
+        },
+        "sill_height_mm": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sill Height Mm"
+        },
+        "line_reference": {
+          "default": "UNKNOWN",
+          "enum": [
+            "UNKNOWN",
+            "CENTERLINE",
+            "LEFT_FACE",
+            "RIGHT_FACE"
+          ],
+          "title": "Line Reference",
+          "type": "string"
+        }
+      },
+      "title": "Dimensions",
+      "type": "object"
+    },
+    "Geometry": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "LINE",
+            "POLYLINE",
+            "ARC",
+            "CIRCLE",
+            "ELLIPSE",
+            "SPLINE",
+            "POLYGON",
+            "MULTIPOLYGON",
+            "POINT",
+            "TEXT",
+            "UNSUPPORTED"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "points_mm": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "title": "Points Mm",
+          "type": "array"
+        },
+        "closed": {
+          "default": false,
+          "title": "Closed",
+          "type": "boolean"
+        },
+        "polygons": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Polygons",
+          "type": "array"
+        },
+        "parameters": {
+          "additionalProperties": true,
+          "title": "Parameters",
+          "type": "object"
+        },
+        "approximation_tolerance_mm": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Approximation Tolerance Mm"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Geometry",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "WALL",
+        "DOOR",
+        "WINDOW",
+        "COLUMN",
+        "BEAM",
+        "STAIR",
+        "SPACE",
+        "EXCLUSION",
+        "HOLE",
+        "ANNOTATION",
+        "UNKNOWN"
+      ],
+      "title": "Type",
+      "type": "string"
+    },
+    "source_handles": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Handles",
+      "type": "array"
+    },
+    "source_path": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Path",
+      "type": "array"
+    },
+    "source_type": {
+      "title": "Source Type",
+      "type": "string"
+    },
+    "layer": {
+      "title": "Layer",
+      "type": "string"
+    },
+    "block_names": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Block Names",
+      "type": "array"
+    },
+    "geometry": {
+      "$ref": "#/$defs/Geometry"
+    },
+    "confidence": {
+      "enum": [
+        "EXPLICIT",
+        "CANDIDATE",
+        "UNKNOWN"
+      ],
+      "title": "Confidence",
+      "type": "string"
+    },
+    "evidence": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "dimensions": {
+      "$ref": "#/$defs/Dimensions"
+    },
+    "dimension_sources": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Dimension Sources",
+      "type": "object"
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "source_handles",
+    "source_path",
+    "source_type",
+    "layer",
+    "geometry",
+    "confidence"
+  ],
+  "title": "Element",
+  "type": "object"
+}

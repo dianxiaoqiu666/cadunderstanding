@@ -1,0 +1,2 @@
+# Prompt bytes participate in frozen model-evidence hashes.
+services/understanding/prompts/*.txt -text

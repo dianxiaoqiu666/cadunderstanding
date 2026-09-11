@@ -1,0 +1,47 @@
+[
+  {
+    "path": "services\\understanding\\app.py",
+    "sha256": "7D0C906087A818125CC3B9686DCA66E9679FC05F420A90BF19E08A136DC21472",
+    "archive": "C:\\D\\汉斯\\CADunderstanding\\_archive\\l3_import\\services\\understanding\\app.py"
+  },
+  {
+    "path": "scripts\\start.py",
+    "sha256": "461530F19B0DE086164EB60B78FF13880D6F6278A815885B26005E64542F79C1",
+    "archive": "C:\\D\\汉斯\\CADunderstanding\\_archive\\l3_import\\scripts\\start.py"
+  },
+  {
+    "path": "scripts\\setup.ps1",
+    "sha256": "68C747D89C56B36EF318AD844DDFC5EB5C215C9EC45F17A94DD514DE9576BDB6",
+    "archive": "C:\\D\\汉斯\\CADunderstanding\\_archive\\l3_import\\scripts\\setup.ps1"
+  },
+  {
+    "path": "scripts\\export_schemas.py",
+    "sha256": "963E978E966F51AE5FEC70C75176EAB5D08FF2506AE2017F21EAFA5F13D4F5AE",
+    "archive": "C:\\D\\汉斯\\CADunderstanding\\_archive\\l3_import\\scripts\\export_schemas.py"
+  },
+  {
+    "path": "control\\PROJECT_GOAL.md",
+    "sha256": "57FC3CCC9B68D0A7EBB1AA15639057BCB2430144AE571962C1F6D897D8540670",
+    "archive": "C:\\D\\汉斯\\CADunderstanding\\_archive\\l3_import\\control\\PROJECT_GOAL.md"
+  },
+  {
+    "path": "control\\PROJECT_BOUNDARY.md",
+    "sha256": "90AD99BAC733341B4E7D474C3D9EA1C861CE99AD3C4110FF48C6BEF7D0EE94B6",
+    "archive": "C:\\D\\汉斯\\CADunderstanding\\_archive\\l3_import\\control\\PROJECT_BOUNDARY.md"
+  },
+  {
+    "path": "control\\PROJECT_STATE.md",
+    "sha256": "9F094B77DE84CF56FC81D7E594E63E425CDD0FFE7E90AF02A998A11D13F19D71",
+    "archive": "C:\\D\\汉斯\\CADunderstanding\\_archive\\l3_import\\control\\PROJECT_STATE.md"
+  },
+  {
+    "path": "control\\SOURCE_MANIFEST.md",
+    "sha256": "B495BDF493DFF2578C3DBEBF4C7E301CAF7322E95AE7662EBAD559F241BFF14A",
+    "archive": "C:\\D\\汉斯\\CADunderstanding\\_archive\\l3_import\\control\\SOURCE_MANIFEST.md"
+  },
+  {
+    "path": "scripts\\audit_sources.py",
+    "sha256": "843c43c47aa7a618b6611f6397478f9b5b4fd47d0b1667459879c5f4bf07ec71",
+    "archive": "C:\\D\\汉斯\\CADunderstanding\\_archive\\l3_import\\scripts\\audit_sources.py"
+  }
+]

@@ -1,0 +1,385 @@
+{
+  "$defs": {
+    "AnchorCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "element_id": {
+          "title": "Element Id",
+          "type": "string"
+        },
+        "position_relation": {
+          "enum": [
+            "INSIDE",
+            "OUTSIDE",
+            "BOUNDARY",
+            "UNCERTAIN"
+          ],
+          "title": "Position Relation",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "element_id",
+        "position_relation",
+        "reason"
+      ],
+      "title": "AnchorCheck",
+      "type": "object"
+    },
+    "GapProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "from_vertex_id": {
+          "title": "From Vertex Id",
+          "type": "string"
+        },
+        "to_vertex_id": {
+          "title": "To Vertex Id",
+          "type": "string"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from_vertex_id",
+        "to_vertex_id",
+        "reason"
+      ],
+      "title": "GapProposal",
+      "type": "object"
+    },
+    "IndoorProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-zA-Z0-9_-]{1,80}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "boundary_vertex_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 1000,
+          "minItems": 3,
+          "title": "Boundary Vertex Ids",
+          "type": "array"
+        },
+        "hole_vertex_ids": {
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "maxItems": 100,
+          "title": "Hole Vertex Ids",
+          "type": "array"
+        },
+        "gap_proposals": {
+          "items": {
+            "$ref": "#/$defs/GapProposal"
+          },
+          "maxItems": 100,
+          "title": "Gap Proposals",
+          "type": "array"
+        },
+        "evidence_element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 200,
+          "minItems": 1,
+          "title": "Evidence Element Ids",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "boundary_vertex_ids",
+        "hole_vertex_ids",
+        "gap_proposals",
+        "evidence_element_ids",
+        "reason"
+      ],
+      "title": "IndoorProposal",
+      "type": "object"
+    },
+    "RelationProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "from_element_id": {
+          "title": "From Element Id",
+          "type": "string"
+        },
+        "to_element_id": {
+          "title": "To Element Id",
+          "type": "string"
+        },
+        "relation": {
+          "enum": [
+            "HOSTED_BY",
+            "CONNECTS_TO",
+            "LABELS"
+          ],
+          "title": "Relation",
+          "type": "string"
+        },
+        "evidence_element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Evidence Element Ids",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from_element_id",
+        "to_element_id",
+        "relation",
+        "evidence_element_ids",
+        "reason"
+      ],
+      "title": "RelationProposal",
+      "type": "object"
+    },
+    "RoleProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "element_id": {
+          "title": "Element Id",
+          "type": "string"
+        },
+        "proposed_role": {
+          "enum": [
+            "WALL",
+            "DOOR",
+            "WINDOW",
+            "COLUMN",
+            "BEAM",
+            "STAIR",
+            "SPACE",
+            "EXCLUSION",
+            "HOLE",
+            "ANNOTATION",
+            "UNKNOWN"
+          ],
+          "title": "Proposed Role",
+          "type": "string"
+        },
+        "evidence_element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Evidence Element Ids",
+          "type": "array"
+        },
+        "reason": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "element_id",
+        "proposed_role",
+        "evidence_element_ids",
+        "reason"
+      ],
+      "title": "RoleProposal",
+      "type": "object"
+    },
+    "ScopeReview": {
+      "additionalProperties": false,
+      "properties": {
+        "extent": {
+          "enum": [
+            "WHOLE_STORE_CANDIDATE",
+            "PARTIAL_INTERIOR",
+            "UNRESOLVED"
+          ],
+          "title": "Extent",
+          "type": "string"
+        },
+        "reviewed_view_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Reviewed View Ids",
+          "type": "array"
+        },
+        "summary": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "anchor_checks": {
+          "items": {
+            "$ref": "#/$defs/AnchorCheck"
+          },
+          "maxItems": 200,
+          "title": "Anchor Checks",
+          "type": "array"
+        }
+      },
+      "required": [
+        "extent",
+        "reviewed_view_ids",
+        "summary",
+        "anchor_checks"
+      ],
+      "title": "ScopeReview",
+      "type": "object"
+    },
+    "SemanticProposal": {
+      "additionalProperties": false,
+      "description": "Model output: references only; coordinates and dimensions are not writable.",
+      "properties": {
+        "schema_version": {
+          "enum": [
+            "cad-semantic-proposal/1.0",
+            "cad-semantic-proposal/2.0"
+          ],
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        },
+        "evidence_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Evidence Sha256",
+          "type": "string"
+        },
+        "role_proposals": {
+          "items": {
+            "$ref": "#/$defs/RoleProposal"
+          },
+          "maxItems": 500,
+          "title": "Role Proposals",
+          "type": "array"
+        },
+        "indoor_proposals": {
+          "items": {
+            "$ref": "#/$defs/IndoorProposal"
+          },
+          "maxItems": 20,
+          "title": "Indoor Proposals",
+          "type": "array"
+        },
+        "relation_proposals": {
+          "items": {
+            "$ref": "#/$defs/RelationProposal"
+          },
+          "maxItems": 500,
+          "title": "Relation Proposals",
+          "type": "array"
+        },
+        "unresolved": {
+          "items": {
+            "$ref": "#/$defs/SemanticUnresolved"
+          },
+          "maxItems": 500,
+          "title": "Unresolved",
+          "type": "array"
+        },
+        "scope_review": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScopeReview"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "schema_version",
+        "source_sha256",
+        "evidence_sha256",
+        "role_proposals",
+        "indoor_proposals",
+        "relation_proposals",
+        "unresolved"
+      ],
+      "title": "SemanticProposal",
+      "type": "object"
+    },
+    "SemanticUnresolved": {
+      "additionalProperties": false,
+      "properties": {
+        "element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100,
+          "title": "Element Ids",
+          "type": "array"
+        },
+        "question": {
+          "maxLength": 2000,
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        }
+      },
+      "required": [
+        "element_ids",
+        "question"
+      ],
+      "title": "SemanticUnresolved",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "result_id": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Result Id",
+      "type": "string"
+    },
+    "proposal": {
+      "$ref": "#/$defs/SemanticProposal"
+    }
+  },
+  "required": [
+    "result_id",
+    "proposal"
+  ],
+  "title": "EnrichmentImportRequest",
+  "type": "object"
+}

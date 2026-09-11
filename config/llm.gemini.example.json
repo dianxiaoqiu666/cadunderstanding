@@ -1,0 +1,10 @@
+{
+  "provider": "openai_compatible",
+  "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+  "model": "gemini-3.8-flash",
+  "api_key_env": "CAD_LLM_API_KEY",
+  "response_format": "json_schema",
+  "max_output_tokens": 8192,
+  "token_parameter": "max_completion_tokens",
+  "timeout_seconds": 120
+}

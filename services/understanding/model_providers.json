@@ -1,0 +1,74 @@
+{
+  "checked_at": "2026-09-10",
+  "actual_cad_model_evaluation": "NOT_RUN",
+  "providers": [
+    {
+      "name": "阿里云百炼 / 千问",
+      "model": "qwen3.8-max",
+      "alternatives": [
+        "qwen3.8-flash",
+        "qwen3.7-plus"
+      ],
+      "protocol": "openai_compatible",
+      "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+      "image_input": true,
+      "structured_output": true,
+      "selection_note": "建议作为国内服务的首轮测试对象；先测旗舰，再评估较轻模型。Key 和模型需要属于对应地域。",
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/vision-model",
+        "https://help.aliyun.com/zh/model-studio/compatibility-of-openai-with-dashscope"
+      ]
+    },
+    {
+      "name": "OpenAI",
+      "model": "gpt-5.6-terra",
+      "alternatives": [
+        "gpt-6-astra",
+        "gpt-5.6-sol"
+      ],
+      "protocol": "openai_compatible",
+      "base_url": "https://api.openai.com/v1",
+      "image_input": true,
+      "structured_output": true,
+      "selection_note": "Terra 为能力与成本平衡档，Astra 可用于复杂图纸对照；尚未实测 CAD 准确率。",
+      "sources": [
+        "https://developers.openai.com/api/docs/models/compare",
+        "https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create"
+      ]
+    },
+    {
+      "name": "Google Gemini",
+      "model": "gemini-3.8-flash",
+      "alternatives": [
+        "gemini-3.1-pro-preview"
+      ],
+      "protocol": "openai_compatible",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "image_input": true,
+      "structured_output": true,
+      "selection_note": "当前稳定 Flash 可作多模态对照；Pro 候选为预览版本，需留意生命周期。",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models",
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash",
+        "https://ai.google.dev/gemini-api/docs/openai"
+      ]
+    },
+    {
+      "name": "Anthropic Claude",
+      "model": "claude-sonnet-5",
+      "alternatives": [
+        "claude-opus-5"
+      ],
+      "protocol": "anthropic",
+      "base_url": "https://api.anthropic.com/v1",
+      "image_input": true,
+      "structured_output": true,
+      "selection_note": "使用原生 Messages 协议，可作为空间语义判断的独立对照；CAD 效果未实测。",
+      "sources": [
+        "https://platform.claude.com/docs/en/models/overview",
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+        "https://platform.claude.com/docs/en/api/messages/create"
+      ]
+    }
+  ]
+}

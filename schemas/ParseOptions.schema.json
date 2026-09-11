@@ -1,0 +1,280 @@
+{
+  "$defs": {
+    "Dimensions": {
+      "additionalProperties": false,
+      "properties": {
+        "height_mm": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Height Mm"
+        },
+        "thickness_mm": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Thickness Mm"
+        },
+        "sill_height_mm": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sill Height Mm"
+        },
+        "line_reference": {
+          "default": "UNKNOWN",
+          "enum": [
+            "UNKNOWN",
+            "CENTERLINE",
+            "LEFT_FACE",
+            "RIGHT_FACE"
+          ],
+          "title": "Line Reference",
+          "type": "string"
+        }
+      },
+      "title": "Dimensions",
+      "type": "object"
+    },
+    "EntityOverride": {
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "anyOf": [
+            {
+              "enum": [
+                "WALL",
+                "DOOR",
+                "WINDOW",
+                "COLUMN",
+                "BEAM",
+                "STAIR",
+                "SPACE",
+                "EXCLUSION",
+                "HOLE",
+                "ANNOTATION",
+                "UNKNOWN"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Role"
+        },
+        "dimensions": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Dimensions"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "EntityOverride",
+      "type": "object"
+    },
+    "RegionInput": {
+      "additionalProperties": false,
+      "description": "An explicit indoor ring or equipment footprint in CAD WCS millimeters.",
+      "properties": {
+        "boundary_mm": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 20000,
+          "minItems": 3,
+          "title": "Boundary Mm",
+          "type": "array"
+        },
+        "holes_mm": {
+          "items": {
+            "items": {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "maxItems": 1000,
+          "title": "Holes Mm",
+          "type": "array"
+        }
+      },
+      "required": [
+        "boundary_mm"
+      ],
+      "title": "RegionInput",
+      "type": "object"
+    },
+    "UsableAreaOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "indoor_regions": {
+          "items": {
+            "$ref": "#/$defs/RegionInput"
+          },
+          "maxItems": 100,
+          "title": "Indoor Regions",
+          "type": "array"
+        },
+        "boundary_clearance_mm": {
+          "default": 0,
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Boundary Clearance Mm",
+          "type": "number"
+        },
+        "obstacle_clearance_mm": {
+          "default": 0,
+          "maximum": 10000,
+          "minimum": 0,
+          "title": "Obstacle Clearance Mm",
+          "type": "number"
+        }
+      },
+      "title": "UsableAreaOptions",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "source_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Sha256"
+    },
+    "layer_roles": {
+      "additionalProperties": {
+        "enum": [
+          "WALL",
+          "DOOR",
+          "WINDOW",
+          "COLUMN",
+          "BEAM",
+          "STAIR",
+          "SPACE",
+          "EXCLUSION",
+          "HOLE",
+          "ANNOTATION",
+          "UNKNOWN"
+        ],
+        "type": "string"
+      },
+      "title": "Layer Roles",
+      "type": "object"
+    },
+    "entity_overrides": {
+      "additionalProperties": {
+        "$ref": "#/$defs/EntityOverride"
+      },
+      "title": "Entity Overrides",
+      "type": "object"
+    },
+    "dimensions": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Dimensions"
+      },
+      "propertyNames": {
+        "enum": [
+          "WALL",
+          "DOOR",
+          "WINDOW",
+          "COLUMN",
+          "BEAM",
+          "STAIR",
+          "SPACE",
+          "EXCLUSION",
+          "HOLE",
+          "ANNOTATION",
+          "UNKNOWN"
+        ]
+      },
+      "title": "Dimensions",
+      "type": "object"
+    },
+    "assume_units": {
+      "anyOf": [
+        {
+          "enum": [
+            "mm",
+            "cm",
+            "m",
+            "in",
+            "ft"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Assume Units"
+    },
+    "curve_tolerance_mm": {
+      "default": 0.5,
+      "maximum": 10,
+      "minimum": 0.01,
+      "title": "Curve Tolerance Mm",
+      "type": "number"
+    },
+    "usable_area": {
+      "$ref": "#/$defs/UsableAreaOptions"
+    }
+  },
+  "title": "ParseOptions",
+  "type": "object"
+}

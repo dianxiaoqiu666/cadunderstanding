@@ -1,0 +1,11 @@
+{
+  "provider": "openai_compatible",
+  "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "model": "qwen3.8-max",
+  "api_key_env": "CAD_LLM_API_KEY",
+  "response_format": "json_object",
+  "max_output_tokens": 8192,
+  "token_parameter": "max_tokens",
+  "timeout_seconds": 120,
+  "enable_thinking": false
+}

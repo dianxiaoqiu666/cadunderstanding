@@ -1,0 +1,389 @@
+{
+  "$defs": {
+    "AreaPolygon": {
+      "additionalProperties": false,
+      "properties": {
+        "boundary_mm": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 20000,
+          "minItems": 3,
+          "title": "Boundary Mm",
+          "type": "array"
+        },
+        "holes_mm": {
+          "items": {
+            "items": {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "maxItems": 1000,
+          "title": "Holes Mm",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "area_mm2": {
+          "exclusiveMinimum": 0,
+          "title": "Area Mm2",
+          "type": "number"
+        },
+        "area_m2": {
+          "exclusiveMinimum": 0,
+          "title": "Area M2",
+          "type": "number"
+        }
+      },
+      "required": [
+        "boundary_mm",
+        "id",
+        "area_mm2",
+        "area_m2"
+      ],
+      "title": "AreaPolygon",
+      "type": "object"
+    },
+    "Barrier": {
+      "additionalProperties": false,
+      "properties": {
+        "element_id": {
+          "title": "Element Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "WALL",
+            "DOOR",
+            "WINDOW",
+            "COLUMN",
+            "BEAM",
+            "STAIR",
+            "SPACE",
+            "EXCLUSION",
+            "HOLE",
+            "ANNOTATION",
+            "UNKNOWN"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "source_handles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Handles",
+          "type": "array"
+        },
+        "paths_mm": {
+          "items": {
+            "items": {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "title": "Paths Mm",
+          "type": "array"
+        },
+        "footprint_known": {
+          "title": "Footprint Known",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "element_id",
+        "role",
+        "source_handles",
+        "paths_mm",
+        "footprint_known"
+      ],
+      "title": "Barrier",
+      "type": "object"
+    },
+    "Issue": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "default": "WARNING",
+          "enum": [
+            "INFO",
+            "WARNING",
+            "ERROR"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "element_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Element Ids",
+          "type": "array"
+        },
+        "source_handles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Handles",
+          "type": "array"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "Issue",
+      "type": "object"
+    },
+    "Obstacle": {
+      "additionalProperties": false,
+      "properties": {
+        "element_id": {
+          "title": "Element Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "WALL",
+            "DOOR",
+            "WINDOW",
+            "COLUMN",
+            "BEAM",
+            "STAIR",
+            "SPACE",
+            "EXCLUSION",
+            "HOLE",
+            "ANNOTATION",
+            "UNKNOWN"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "source_handles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Handles",
+          "type": "array"
+        },
+        "basis": {
+          "title": "Basis",
+          "type": "string"
+        },
+        "polygons": {
+          "items": {
+            "$ref": "#/$defs/AreaPolygon"
+          },
+          "title": "Polygons",
+          "type": "array"
+        }
+      },
+      "required": [
+        "element_id",
+        "role",
+        "source_handles",
+        "basis",
+        "polygons"
+      ],
+      "title": "Obstacle",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "usable-area/1.0",
+      "default": "usable-area/1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "default": "NOT_READY",
+      "enum": [
+        "READY",
+        "REVIEW_REQUIRED",
+        "NOT_READY",
+        "EMPTY"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "ready_for_placement": {
+      "default": false,
+      "title": "Ready For Placement",
+      "type": "boolean"
+    },
+    "source_sha256": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Sha256"
+    },
+    "scope_source": {
+      "default": "NONE",
+      "enum": [
+        "NONE",
+        "SOURCE_BOUND_USER",
+        "EXPLICIT_CAD_SCOPE",
+        "EXPLICIT_CAD_ROOMS",
+        "MODEL_PROPOSAL"
+      ],
+      "title": "Scope Source",
+      "type": "string"
+    },
+    "scope_element_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Scope Element Ids",
+      "type": "array"
+    },
+    "indoor_regions": {
+      "items": {
+        "$ref": "#/$defs/AreaPolygon"
+      },
+      "title": "Indoor Regions",
+      "type": "array"
+    },
+    "regions": {
+      "items": {
+        "$ref": "#/$defs/AreaPolygon"
+      },
+      "title": "Regions",
+      "type": "array"
+    },
+    "obstacles": {
+      "items": {
+        "$ref": "#/$defs/Obstacle"
+      },
+      "title": "Obstacles",
+      "type": "array"
+    },
+    "barriers": {
+      "items": {
+        "$ref": "#/$defs/Barrier"
+      },
+      "title": "Barriers",
+      "type": "array"
+    },
+    "excluded_regions": {
+      "items": {
+        "$ref": "#/$defs/AreaPolygon"
+      },
+      "title": "Excluded Regions",
+      "type": "array"
+    },
+    "indoor_area_m2": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Indoor Area M2"
+    },
+    "excluded_area_m2": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Excluded Area M2"
+    },
+    "usable_area_m2": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Usable Area M2"
+    },
+    "boundary_clearance_mm": {
+      "default": 0,
+      "title": "Boundary Clearance Mm",
+      "type": "number"
+    },
+    "obstacle_clearance_mm": {
+      "default": 0,
+      "title": "Obstacle Clearance Mm",
+      "type": "number"
+    },
+    "issues": {
+      "items": {
+        "$ref": "#/$defs/Issue"
+      },
+      "title": "Issues",
+      "type": "array"
+    },
+    "footprint_check_required": {
+      "default": true,
+      "title": "Footprint Check Required",
+      "type": "boolean"
+    },
+    "meaning": {
+      "default": "已声明室内范围扣除已知占地；REVIEW_REQUIRED 的区域仅供核实，不能直接批准摆放。",
+      "title": "Meaning",
+      "type": "string"
+    }
+  },
+  "title": "UsableArea",
+  "type": "object"
+}

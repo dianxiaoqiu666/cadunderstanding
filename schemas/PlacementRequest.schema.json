@@ -1,0 +1,72 @@
+{
+  "$defs": {
+    "RegionInput": {
+      "additionalProperties": false,
+      "description": "An explicit indoor ring or equipment footprint in CAD WCS millimeters.",
+      "properties": {
+        "boundary_mm": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "type": "array"
+          },
+          "maxItems": 20000,
+          "minItems": 3,
+          "title": "Boundary Mm",
+          "type": "array"
+        },
+        "holes_mm": {
+          "items": {
+            "items": {
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "maxItems": 1000,
+          "title": "Holes Mm",
+          "type": "array"
+        }
+      },
+      "required": [
+        "boundary_mm"
+      ],
+      "title": "RegionInput",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "result_id": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Result Id",
+      "type": "string"
+    },
+    "footprint": {
+      "$ref": "#/$defs/RegionInput"
+    }
+  },
+  "required": [
+    "result_id",
+    "footprint"
+  ],
+  "title": "PlacementRequest",
+  "type": "object"
+}
